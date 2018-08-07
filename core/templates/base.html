@@ -1,0 +1,16 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charser="utf-8">
+        <title>Gym workout</title>
+        <link rel="stylesheet" href="{% static 'css/bootstrap.mini.css'%}">
+    </head>
+    <body>
+        <header></header>
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        <footer></footer>
+    </body>
+</html>
