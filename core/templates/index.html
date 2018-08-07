@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    {% if user.is_authenticated %}
+        <p>Hello,
+            {{ user.username }}</p>
+    {% endif %}
     <p>Welcom to gym wourkout app</p>
 {% endblock %}
