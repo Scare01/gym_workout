@@ -15,7 +15,9 @@ class Program(models.Model):
 class Excercises(models.Model):
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    description = models.CharField(max_length=500, default='')
+    weight = models.PositiveIntegerField(default=0)
+    rounds_count = models.PositiveIntegerField(default=0)
+    max_rep = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -23,11 +25,4 @@ class Excercises(models.Model):
 
 class Rounds(models.Model):
     excercise = models.ForeignKey(Excercises, on_delete=models.CASCADE)
-    weight = models.PositiveIntegerField(default=0)
-    rounds_count = models.PositiveIntegerField(default=0)
-    max_rep = models.PositiveIntegerField(default=0)
-
-
-class Round(models.Model):
-    round = models.ForeignKey(Rounds, on_delete=models.CASCADE)
     current_rep = models.PositiveIntegerField(default=0)
