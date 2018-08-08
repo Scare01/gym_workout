@@ -51,11 +51,9 @@ class ModelExcercisesTest(TestCase):
         program = Program.objects.create(name="Less reps", author=user,
                                          continuity=6, source="internet")
         Excercises.objects.create(
-            program=program, name="Sit Ups",
-            weight=90, rounds_count=1, max_rep=20)
+            program=program, name="Sit Ups", rounds_count=1, max_rep=20)
         Excercises.objects.create(
-            program=program, name="bench press",
-            weight=65, rounds_count=3, max_rep=12)
+            program=program, name="bench press", rounds_count=3, max_rep=12)
 
     def test_program_label(self):
         excercise1 = Excercises.objects.get(id=1)
@@ -76,18 +74,6 @@ class ModelExcercisesTest(TestCase):
         self.assertEqual(type(excercise2.name), str)
         self.assertEqual(excercise1.name, 'Sit Ups')
         self.assertEqual(excercise2.name, 'bench press')
-
-    def test_weight_label(self):
-        excercise1 = Excercises.objects.get(id=1)
-        excercise2 = Excercises.objects.get(id=2)
-        field_label1 = excercise1._meta.get_field('weight').verbose_name
-        field_label2 = excercise2._meta.get_field('weight').verbose_name
-        self.assertEqual(field_label1, 'weight')
-        self.assertEqual(field_label2, 'weight')
-        self.assertEqual(type(excercise1.weight), int)
-        self.assertEqual(type(excercise2.weight), int)
-        self.assertEqual(excercise1.weight, 90)
-        self.assertEqual(excercise2.weight, 65)
 
     def test_rounds_count_label(self):
         excercise1 = Excercises.objects.get(id=1)
@@ -124,16 +110,14 @@ class ModelRoundsTest(TestCase):
         program = Program.objects.create(name="Less reps", author=user,
                                          continuity=6, source="internet")
         excercise1 = Excercises.objects.create(
-            program=program, name="Sit Ups", weight=90,
-            rounds_count=1, max_rep=20)
+            program=program, name="Sit Ups", rounds_count=1, max_rep=20)
         excercise2 = Excercises.objects.create(
-            program=program, name="bench press", weight=65,
-            rounds_count=3, max_rep=12)
+            program=program, name="bench press", rounds_count=3, max_rep=12)
 
-        Rounds.objects.create(excercise=excercise1, current_rep=20)
-        Rounds.objects.create(excercise=excercise2, current_rep=12)
-        Rounds.objects.create(excercise=excercise2, current_rep=10)
-        Rounds.objects.create(excercise=excercise2, current_rep=8)
+        Rounds.objects.create(excercise=excercise1, weight=90, current_rep=20)
+        Rounds.objects.create(excercise=excercise2, weight=65, current_rep=12)
+        Rounds.objects.create(excercise=excercise2, weight=65, current_rep=10)
+        Rounds.objects.create(excercise=excercise2, weight=65, current_rep=8)
 
     def test_current_rep_label(self):
         round1 = Rounds.objects.get(id=1)
@@ -156,6 +140,28 @@ class ModelRoundsTest(TestCase):
         self.assertEqual(round2.current_rep, 12)
         self.assertEqual(round3.current_rep, 10)
         self.assertEqual(round4.current_rep, 8)
+
+    def test_weight_label(self):
+        round1 = Rounds.objects.get(id=1)
+        round2 = Rounds.objects.get(id=2)
+        round3 = Rounds.objects.get(id=3)
+        round4 = Rounds.objects.get(id=4)
+        field_label1 = round1._meta.get_field('weight').verbose_name
+        field_label2 = round2._meta.get_field('weight').verbose_name
+        field_label3 = round3._meta.get_field('weight').verbose_name
+        field_label4 = round4._meta.get_field('weight').verbose_name
+        self.assertEqual(field_label1, 'weight')
+        self.assertEqual(field_label2, 'weight')
+        self.assertEqual(field_label3, 'weight')
+        self.assertEqual(field_label4, 'weight')
+        self.assertEqual(type(round1.weight), int)
+        self.assertEqual(type(round2.weight), int)
+        self.assertEqual(type(round3.weight), int)
+        self.assertEqual(type(round4.weight), int)
+        self.assertEqual(round1.weight, 90)
+        self.assertEqual(round2.weight, 65)
+        self.assertEqual(round2.weight, 65)
+        self.assertEqual(round2.weight, 65)
 
     def test_excercise_label(self):
         round1 = Rounds.objects.get(id=1)
