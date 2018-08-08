@@ -47,3 +47,26 @@ class LoginPage(TestCase):
     def test_does_not_contains_incorrect_html(self):
         response = self.client.get(reverse('login'))
         self.assertNotContains(response, 'This is not a login page')
+
+
+class SignupPage(TestCase):
+
+    def test_status_code(self):
+        response = self.client.get('/signup/')
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_url_by_name(self):
+        response = self.client.get(reverse('signup'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_view_uses_cortect_template(self):
+        response = self.client.get(reverse('signup'))
+        self.assertTemplateUsed(response, 'signup.html')
+
+    def test_contains_correct_html(self):
+        response = self.client.get(reverse('signup'))
+        self.assertContains(response, '<h2>Sign up</h2>')
+
+    def test_does_not_contains_incorrect_html(self):
+        response = self.client.get(reverse('signup'))
+        self.assertNotContains(response, 'Some bad code in here.')
