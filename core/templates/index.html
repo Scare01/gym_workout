@@ -2,8 +2,14 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <p>Hello,
-            {{ user.username }}</p>
+        <div>
+            {% for prog in program %}
+                <p>{{ prog }}</p>
+            {% endfor %}
+        </div>
+        <div>
+            <a href='{% url "addprogram" %}'>Add program</a>
+        </div>
     {% endif %}
     <p>Welcom to gym wourkout app</p>
 {% endblock %}

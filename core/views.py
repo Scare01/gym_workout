@@ -5,9 +5,11 @@ from django.contrib.auth import login, logout
 from django.views.generic.base import View
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
+from core.models import ProgramForm, Program
 
 
 class IndexPageView(TemplateView):
+
     template_name = 'index.html'
 
 
@@ -18,7 +20,7 @@ class RegisterFormView(FormView):
 
     def form_valid(self, form):
         form.save()
-        return super(RegisterFormView, self).form_valid(form)
+        return super().form_valid(form)
 
 
 class LoginFormView(FormView):
@@ -29,10 +31,20 @@ class LoginFormView(FormView):
     def form_valid(self, form):
         self.user = form.get_user()
         login(self.request, self.user)
-        return super(LoginFormView, self).form_valid(form)
+        return super().form_valid(form)
 
 
 class LogoutView(View):
     def get(self, request):
         logout(request)
         return redirect('index')
+
+
+class AddProgramView(FormView):
+    form_class = ProgramForm
+    success_url = reverse_lazy('index')
+    template_name = 'addprogram.html'
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
