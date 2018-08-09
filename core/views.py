@@ -1,16 +1,29 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic.edit import FormView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import login, logout
 from django.views.generic.base import View
-from django.views.generic import TemplateView
+from django.views.generic import ListView, DetailView
+
+
 from django.urls import reverse_lazy
 from core.models import ProgramForm, Program
 
 
-class IndexPageView(TemplateView):
-
+class IndexPageView(ListView):
     template_name = 'index.html'
+
+    def get_queryset(self):
+        return Program.objects.all()
+
+
+class ProgramDetailView(DetailView):
+    template_name = 'programdetail.html'
+
+    def get_object(self):
+        programs = Program.objects.all()
+        for program in programs:
+            return Program.objects.get(program.pk)
 
 
 class RegisterFormView(FormView):

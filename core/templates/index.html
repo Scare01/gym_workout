@@ -2,14 +2,19 @@
 
 {% block content %}
     {% if user.is_authenticated %}
+        <h2>
+            Hello,
+            {{ user.username }}! Welcom to gym wourkout app</h2>
         <div>
-            {% for prog in program %}
-                <p>{{ prog }}</p>
+            {% for program in object_list %}
+                <p>
+                    <a href="{% url 'programdetail' %}">{{ program }}</a>
+                </p>
             {% endfor %}
         </div>
         <div>
             <a href='{% url "addprogram" %}'>Add program</a>
         </div>
     {% endif %}
-    <p>Welcom to gym wourkout app</p>
+
 {% endblock %}
