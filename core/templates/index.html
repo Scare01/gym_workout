@@ -8,12 +8,15 @@
         <div>
             {% for program in object_list %}
                 <p>
-                    <a href="{% url 'programdetail' %}">{{ program }}</a>
+                    <a href="/programdetail/{{ program.pk }}">{{ program }}</a>
                 </p>
             {% endfor %}
         </div>
         <div>
             <a href='{% url "addprogram" %}'>Add program</a>
+        </div>
+        <div>
+            <a href="{% url 'createexcercise' %}">Create Excercise</a>
         </div>
     {% endif %}
 

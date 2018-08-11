@@ -7,7 +7,7 @@ from django.views.generic import ListView, DetailView
 
 
 from django.urls import reverse_lazy
-from core.models import ProgramForm, Program
+from core.models import ProgramForm, Program, ExcercisesForm
 
 
 class IndexPageView(ListView):
@@ -19,11 +19,12 @@ class IndexPageView(ListView):
 
 class ProgramDetailView(DetailView):
     template_name = 'programdetail.html'
+    model = Program
 
-    def get_object(self):
-        programs = Program.objects.all()
-        for program in programs:
-            return Program.objects.get(program.pk)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['name'] = Program.objects.filter(pk=self.kwargs.get('pk'))
+        return context
 
 
 class RegisterFormView(FormView):
@@ -61,3 +62,9 @@ class AddProgramView(FormView):
     def form_valid(self, form):
         form.save()
         return super().form_valid(form)
+
+
+class CreateExerciseView(FormView):
+    form_class = ExcercisesForm
+    success_url = reverse_lazy('index')
+    template_name = 'createexcercise.html'
